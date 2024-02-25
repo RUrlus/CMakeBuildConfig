@@ -1,0 +1,16 @@
+function(CBC_SET_BUILD_TYPE PKG_PREF)
+    set(ENABLE_DEBUG_VAR "${PKG_PREF}_ENABLE_DEBUG")
+    set(DEF_BUILD_TYPE_VAR "${PKG_PREF}_DEFAULT_BUILD_TYPE")
+    if(${ENABLE_DEBUG_VAR})
+        set(CMAKE_BUILD_TYPE "Debug" PARENT_SCOPE)
+    else()
+        set(${DEF_BUILD_TYPE_VAR} Release PARENT_SCOPE)
+    endif()
+
+    if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+        message(STATUS "Setting build type to '${${DEF_BUILD_TYPE_VAR}}' as none was specified.")
+        set(CMAKE_BUILD_TYPE "${${DEF_BUILD_TYPE_VAR}}" CACHE STRING "Choose the type of build." FORCE PARENT_SCOPE)
+        # Set the possible values of build type for cmake-gui
+        set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "Asan" "MinSizeRel" "RelWithDebInfo")
+    endif ()
+endfunction()
