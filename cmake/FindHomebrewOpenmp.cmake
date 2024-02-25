@@ -1,0 +1,6 @@
+find_package(OpenMP)
+if ((NOT OpenMP_FOUND) AND APPLE)
+    include(SetHomebrew)
+    set(OpenMP_ROOT ${HOMEBREW_PREFIX}/opt/libomp)
+    find_package(OpenMP)
+endif()
